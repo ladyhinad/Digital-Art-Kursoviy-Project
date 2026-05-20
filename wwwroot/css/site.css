@@ -1,0 +1,109 @@
+/* --- ДОРОГИЙ ЛЮКС: БУРГУНДІ ТА АЙФОНІВСЬКИЙ ШРИФТ --- */
+
+body {
+    /* Глибокий бургунді */
+    background-color: #3b0918;
+    color: #ffffff;
+    /* Той самий айфонівський шрифт (San Francisco) */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Хаотичні тонкі лінії на фоні (дуже прозорі, щоб було стильно) */
+    background-image: linear-gradient(45deg, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(-45deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+/* Робимо картки картин прозорими з тонкими білими рамками */
+.card {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 0px; /* Гострі кути виглядають дорожче */
+    backdrop-filter: blur(5px);
+}
+
+/* Колір тексту всюди білий */
+.card-body, .card-title, .card-text {
+    color: #ffffff !important;
+}
+
+.text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Кнопка "Детальніше" */
+.btn-outline-dark {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+    .btn-outline-dark:hover {
+        background-color: #ffffff;
+        color: #3b0918;
+    }
+
+/* Нижня частина картки */
+.card-footer.bg-white {
+    background-color: transparent !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Тонкі лінії для роздільників */
+.border-bottom {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Прибираємо стандартний білий фон з алертів */
+.alert-info {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+}
+/* --- АНІМАЦІЯ ТА ЛЮКСОВІ ШРИФТИ --- */
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.luxury-title {
+    font-weight: 200 !important; /* Дуже тонкий айфонівський шрифт */
+    letter-spacing: 3px; /* Розрядка букв для дорогого вигляду */
+    animation: slideUpFade 1.2s ease-out forwards;
+}
+
+.luxury-subtitle {
+    font-weight: 300 !important;
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 0; /* Приховуємо до початку анімації */
+    animation: slideUpFade 1.2s ease-out 0.4s forwards; /* Виїжджає на пів секунди пізніше */
+}
+/* --- РЕМОНТ ФУТЕРА (щоб риска завжди була внизу) --- */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0 !important; /* Перебиваємо стандартний відступ ASP.NET */
+}
+
+/* Контейнер з контентом має розтягуватися на весь вільний простір */
+.container {
+    flex: 1 0 auto;
+}
+
+/* Футер залишається в самому низу */
+.footer {
+    position: static !important;
+    flex-shrink: 0;
+}

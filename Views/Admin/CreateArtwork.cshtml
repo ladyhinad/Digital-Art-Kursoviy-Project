@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Додати експонат";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <h2 class="luxury-title mb-4 text-center">Новий експонат</h2>
+
+        <div class="card p-5" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+            <form asp-action="CreateArtwork" method="post">
+
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Назва твору</label>
+                        <input type="text" name="title" class="form-control luxury-input" required />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Рік</label>
+                        <input type="number" name="year" class="form-control luxury-input" value="@DateTime.Now.Year" min="1000" max="@DateTime.Now.Year" required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Напрямок мистецтва</label>
+                        <select name="artworkType" class="form-control luxury-input">
+                            <option value="Painting">Класичний живопис</option>
+                            <option value="DigitalArt">Цифрова графіка</option>
+                            <option value="Photography">Фотографія</option>
+                            <option value="Sculpture">Скульптура</option>
+                            <option value="AIArt">AI-Генерація (ШІ)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Автор</label>
+                        <select name="artistId" class="form-control luxury-input">
+                            @foreach (var artist in ViewBag.Artists)
+                            {
+                                <option value="@artist.Id">@artist.FullName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Категорія</label>
+                        <select name="categoryId" class="form-control luxury-input">
+                            @foreach (var cat in ViewBag.Categories)
+                            {
+                                <option value="@cat.Id">@cat.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Техніка (Матеріал)</label>
+                        <input type="text" name="technique" class="form-control luxury-input" placeholder="Олія, 3D, Акварель..." required />
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Пряме посилання на зображення (URL)</label>
+                    <input type="text" name="imageUrl" class="form-control luxury-input" placeholder="https://..." required />
+                    <small class="text-muted mt-1 d-block">Знайди будь-яку картинку в інтернеті, натисни "Копіювати адресу зображення" і встав сюди.</small>
+                </div>
+
+                <div class="mb-5">
+                    <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Опис концепції</label>
+                    <textarea name="description" class="form-control luxury-input" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-outline-light w-100 py-3 text-uppercase" style="letter-spacing: 2px; border-radius: 0;">Додати до експозиції</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .luxury-input {
+        background-color: transparent !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        border-radius: 0;
+    }
+
+        .luxury-input:focus {
+            box-shadow: none !important;
+            border-color: rgba(255, 255, 255, 0.8) !important;
+        }
+    select option {
+        background-color: #3b0918;
+        color: white;
+    }
+</style>

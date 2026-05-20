@@ -1,0 +1,80 @@
+﻿@model Digital_Art_Kursoviy_Project.Models.Artwork
+@{
+    ViewData["Title"] = Model.Title;
+
+    string displayType = Model.GetType().Name switch
+    {
+        "Painting" => "Класичний живопис",
+        "DigitalArt" => "Цифрова графіка",
+        "Photography" => "Фотографія",
+        "Sculpture" => "Скульптура",
+        "AIArt" => "AI-Генерація (ШІ)",
+        _ => "Сучасне мистецтво"
+    };
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-7 mb-4 text-center">
+            <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid shadow-lg" style="max-height: 80vh; object-fit: contain; border: 1px solid rgba(255,255,255,0.1);" />
+        </div>
+
+        <div class="col-md-5 p-4" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
+            <h1 class="luxury-title mb-4" style="font-size: 2.5rem;">@Model.Title</h1>
+
+            <a asp-action="ArtistProfile" asp-route-id="@Model.Artist?.Id" class="d-flex align-items-center mb-4 pb-4 border-bottom text-decoration-none" style="border-color: rgba(255,255,255,0.1) !important; transition: opacity 0.3s;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">
+                @if (Model.Artist != null && !string.IsNullOrEmpty(Model.Artist.PhotoUrl))
+                {
+                    <img src="@Model.Artist.PhotoUrl" alt="@Model.Artist.FullName" class="rounded-circle me-3 shadow" style="width: 60px; height: 60px; object-fit: cover; border: 2px solid rgba(255,255,255,0.2);" />
+                }
+                else
+                {
+                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center me-3 text-white fw-bold shadow" style="width: 60px; height: 60px; font-size: 1.5rem; background: rgba(255,255,255,0.1) !important; border: 2px solid rgba(255,255,255,0.2);">
+                        @(Model.Artist?.FullName?.Substring(0, 1).ToUpper() ?? "?")
+                    </div>
+                }
+                <div>
+                    <h5 class="text-white mb-1" style="letter-spacing: 1px;">@Model.Artist?.FullName</h5>
+                    <p class="text-white-50 mb-0"><small>Рік створення: @Model.CreationYear</small></p>
+                </div>
+            </a>
+
+            <div class="mb-4">
+                <h6 class="text-uppercase text-white-50 mb-3" style="letter-spacing: 2px; font-size: 0.8rem;">Концепція твору</h6>
+                <p class="text-white" style="font-size: 1.1rem; line-height: 1.8; font-weight: 300;">
+                    @(string.IsNullOrEmpty(Model.Description) ? "Автор вирішив залишити цей твір без текстового опису, дозволивши глядачеві знайти власний сенс." : Model.Description)
+                </p>
+            </div>
+
+            <div class="mb-5 p-3" style="background: rgba(255, 255, 255, 0.02); border-left: 2px solid rgba(255,255,255,0.3); border-radius: 0;">
+                <h6 class="text-uppercase text-white-50 mb-3" style="letter-spacing: 2px; font-size: 0.8rem;">Паспорт експонату</h6>
+
+                <div class="row g-3">
+                    <div class="col-6">
+                        <span class="text-uppercase d-block text-white-50" style="font-size: 0.7rem; letter-spacing: 1px;">Напрямок</span>
+                        <span class="text-white" style="font-size: 0.95rem; font-weight: 300;">@displayType</span>
+                    </div>
+
+                    <div class="col-6">
+                        <span class="text-uppercase d-block text-white-50" style="font-size: 0.7rem; letter-spacing: 1px;">Категорія залу</span>
+                        <span class="text-white" style="font-size: 0.95rem; font-weight: 300;">@(Model.Category?.Name ?? "Загальний зал")</span>
+                    </div>
+
+                    <div class="col-12">
+                        <span class="text-uppercase d-block text-white-50" style="font-size: 0.7rem; letter-spacing: 1px;">Поточний статус</span>
+                        <span class="badge bg-outline-light text-white p-2 mt-1" style="border: 1px solid rgba(255,255,255,0.3); border-radius: 0; font-size: 0.85rem; font-weight: 300; background: rgba(255,255,255,0.05);">
+                            ● @Model.State.GetStatusMessage()
+                        </span>
+                    </div>
+
+                    <div class="col-12">
+                        <span class="text-uppercase d-block text-white-50" style="font-size: 0.7rem; letter-spacing: 1px;">Техніка виконання</span>
+                        <span class="text-white" style="font-size: 0.95rem; font-weight: 300;">@Model.Technique</span>
+                    </div>
+                </div>
+            </div>
+
+            <a asp-action="Index" class="btn btn-outline-light w-100 py-3 text-uppercase" style="letter-spacing: 2px; border-radius: 0;">← До експозиції</a>
+        </div>
+    </div>
+</div>

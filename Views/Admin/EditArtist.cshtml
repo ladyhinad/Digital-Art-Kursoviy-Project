@@ -1,0 +1,66 @@
+﻿@model Digital_Art_Kursoviy_Project.Models.Artist
+@{
+    ViewData["Title"] = "Редагувати митця";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <h2 class="luxury-title mb-4 text-center">Редагування профілю митця</h2>
+
+        <div class="card p-5" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+            <form asp-action="EditArtist" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <div class="mb-4">
+                    <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">ПІБ або псевдонім</label>
+                    <input type="text" name="fullName" class="form-control luxury-input" value="@Model.FullName" required />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Посилання на фото митця (URL)</label>
+                    <input type="text" name="photoUrl" class="form-control luxury-input" value="@Model.PhotoUrl" placeholder="https://images.unsplash.com/..." />
+                    <small class="text-muted mt-1 d-block">Можна скопіювати адресу будь-якого фото з інтернету та вставити сюди.</small>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Рік народження</label>
+                        <input type="number" name="birthYear" class="form-control luxury-input" value="@Model.BirthYear" required />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Рік смерті (якщо є)</label>
+                        <input type="number" name="deathYear" class="form-control luxury-input" value="@Model.DeathYear" placeholder="Залишити порожнім, якщо живий" />
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Контактна інформація (Студія / Email)</label>
+                    <input type="text" name="contactInfo" class="form-control luxury-input" value="@Model.ContactInfo" required />
+                </div>
+
+                <div class="mb-5">
+                    <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Біографія та стиль</label>
+                    <textarea name="biography" class="form-control luxury-input" rows="4" required>@Model.Biography</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-outline-light w-100 py-3 text-uppercase" style="letter-spacing: 2px; border-radius: 0;">Зберегти зміни</button>
+                <div class="text-center mt-3">
+                    <a asp-action="Index" class="text-white-50 text-decoration-none"><small>Скасувати та повернутися</small></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .luxury-input {
+        background-color: transparent !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        border-radius: 0;
+    }
+
+        .luxury-input:focus {
+            box-shadow: none !important;
+            border-color: rgba(255, 255, 255, 0.8) !important;
+        }
+</style>

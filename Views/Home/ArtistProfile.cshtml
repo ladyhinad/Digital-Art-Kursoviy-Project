@@ -1,0 +1,69 @@
+﻿@model Digital_Art_Kursoviy_Project.Models.Artist
+@{
+    ViewData["Title"] = Model.FullName;
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row align-items-center mb-5 p-5" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 10px;">
+        <div class="col-md-3 text-center mb-4 mb-md-0">
+            @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+            {
+                <img src="@Model.PhotoUrl" alt="@Model.FullName" class="rounded-circle shadow-lg" style="width: 200px; height: 200px; object-fit: cover; border: 3px solid rgba(255,255,255,0.2);" />
+            }
+            else
+            {
+                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mx-auto shadow-lg text-white fw-bold" style="width: 200px; height: 200px; font-size: 5rem; background: rgba(255,255,255,0.1) !important; border: 3px solid rgba(255,255,255,0.2);">
+                    @(Model.FullName?.Substring(0, 1).ToUpper() ?? "?")
+                </div>
+            }
+        </div>
+
+        <div class="col-md-9">
+            <h1 class="luxury-title mb-2" style="font-size: 3rem;">@Model.FullName</h1>
+            <p class="text-white-50 mb-4" style="font-size: 1.2rem; letter-spacing: 1px;">
+                Роки життя: @Model.BirthYear – @(Model.DeathYear?.ToString() ?? "Наш час")
+                <br />
+                <small style="font-size: 0.9rem;">Контакт: @Model.ContactInfo</small>
+            </p>
+
+            <h6 class="text-uppercase text-white-50 mb-3" style="letter-spacing: 2px; font-size: 0.8rem;">Біографія та стиль</h6>
+            <p class="text-white" style="font-size: 1.1rem; line-height: 1.8; font-weight: 300;">
+                @Model.Biography
+            </p>
+        </div>
+    </div>
+
+    <h3 class="luxury-title text-center mb-4">Експонати митця</h3>
+    <hr class="mb-5" style="border-color: rgba(255,255,255,0.2);" />
+
+    <div class="row">
+        @if (Model.Artworks != null && Model.Artworks.Any())
+        {
+            foreach (var item in Model.Artworks)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="d-block text-decoration-none">
+                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title" style="object-fit: cover; height: 250px; width: 100%; transition: opacity 0.3s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">
+                        </a>
+                        <div class="card-body">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
+                                <h5 class="card-title fw-bold text-white text-center" style="transition: color 0.3s;" onmouseover="this.style.color='#aaa'" onmouseout="this.style.color='white'">@item.Title (@item.CreationYear)</h5>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center text-white-50">
+                <p>Наразі в експозиції немає творів цього митця.</p>
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-5">
+        <a asp-action="Index" class="btn btn-outline-light px-5 py-3 text-uppercase" style="letter-spacing: 2px; border-radius: 0;">← До загальної експозиції</a>
+    </div>
+</div>

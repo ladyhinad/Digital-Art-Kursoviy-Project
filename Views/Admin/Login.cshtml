@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Вхід в систему";
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вхід - Aura Gallery Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-control {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
+            .form-control:focus {
+                background: rgba(0,0,0,0.8);
+                color: white;
+                border-color: #fff;
+                box-shadow: none;
+            }
+    </style>
+</head>
+<body>
+    <div class="login-card shadow-lg">
+        <h2 class="text-center mb-4 fw-light" style="letter-spacing: 2px;">AURA GALLERY</h2>
+        <p class="text-center text-white-50 mb-4">Вхід для кураторів</p>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger text-center p-2 mb-4">@ViewBag.Error</div>
+        }
+
+        <form method="post" asp-action="Login">
+            <div class="mb-3">
+                <label class="form-label text-white-50">Логін</label>
+                <input type="text" name="username" class="form-control" required />
+            </div>
+            <div class="mb-4">
+                <label class="form-label text-white-50">Пароль</label>
+                <input type="password" name="password" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-light w-100 py-2 text-uppercase" style="letter-spacing: 1px;">Увійти</button>
+        </form>
+
+        <div class="text-center mt-4">
+            <a href="/" class="text-white-50 text-decoration-none"><small>← Повернутися до галереї</small></a>
+        </div>
+    </div>
+</body>
+</html>

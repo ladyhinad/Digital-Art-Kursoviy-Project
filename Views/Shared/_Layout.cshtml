@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Aura Gallery</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Digital_Art_Kursoviy_Project.styles.css" asp-append-version="true" />
+</head>
+<body>
+    @{
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    }
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-transparent border-bottom border-secondary mb-5">
+            <div class="container-fluid">
+
+                <button class="btn btn-link text-light text-decoration-none p-0 me-3 fs-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                    ☰
+                </button>
+
+                <a class="navbar-brand text-light fw-light" style="letter-spacing: 2px;" asp-area="" asp-controller="Home" asp-action="Index">AURA GALLERY</a>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav">
+                        @if (currentController == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">← На головну сторінку</a>
+                            </li>
+                        }
+                        else
+                        {
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white-50" asp-controller="Admin" asp-action="Index">Панель куратора →</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white-50" asp-controller="Admin" asp-action="Login">Вхід для персоналу</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px); border-right: 1px solid rgba(255,255,255,0.1); width: 300px;">
+        <div class="offcanvas-header border-bottom" style="border-color: rgba(255,255,255,0.1) !important;">
+            <h5 class="offcanvas-title text-light" id="sidebarMenuLabel" style="letter-spacing: 2px;">НАВІГАЦІЯ</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            @await Component.InvokeAsync("SidebarMenu")
+        </div>
+    </div>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2026 - Aura Gallery - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

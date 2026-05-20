@@ -1,0 +1,113 @@
+﻿@model Digital_Art_Kursoviy_Project.Models.Artwork
+@{
+    ViewData["Title"] = "Редагувати експонат";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <h2 class="luxury-title mb-4 text-center">Редагування експонату</h2>
+
+        <div class="card p-5" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+            <form asp-action="EditArtwork" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Назва твору</label>
+                        <input type="text" name="title" class="form-control luxury-input" value="@Model.Title" required />
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Рік</label>
+                        <input type="number" name="year" class="form-control luxury-input" value="@Model.CreationYear" min="1000" max="@DateTime.Now.Year" required />
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Автор</label>
+                    <select name="artistId" class="form-control luxury-input">
+                        @foreach (var artist in ViewBag.Artists)
+                        {
+                            <option value="@artist.Id" selected="@(artist.Id == Model.ArtistId)">@artist.FullName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Категорія залу</label>
+                        <select name="categoryId" class="form-control luxury-input">
+                            @foreach (var cat in ViewBag.Categories)
+                            {
+                                <option value="@cat.Id" selected="@(cat.Id == Model.CategoryId)">@cat.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Статус (Патерн Стан)</label>
+                        <select name="currentStateName" class="form-control luxury-input">
+                            <option value="OnDisplay" selected="@(Model.CurrentStateName == "OnDisplay")">В експозиції (бачать усі)</option>
+                            <option value="Archived" selected="@(Model.CurrentStateName == "Archived")">В архіві галереї (приховано)</option>
+                            <option value="Restoration" selected="@(Model.CurrentStateName == "Restoration")">На реставрації (приховано)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Напрямок мистецтва</label>
+                        <select name="artworkType" class="form-control luxury-input" style="background-color: #121212; color: white;">
+                            <option value="Painting" selected="@(Model.GetType().Name == "Painting")">Класичний живопис</option>
+                            <option value="DigitalArt" selected="@(Model.GetType().Name == "DigitalArt")">Цифрова графіка</option>
+                            <option value="Photography" selected="@(Model.GetType().Name == "Photography")">Фотографія</option>
+                            <option value="Sculpture" selected="@(Model.GetType().Name == "Sculpture")">Скульптура</option>
+                            <option value="AIArt" selected="@(Model.GetType().Name == "AIArt")">AI-Генерація (ШІ)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Техніка / Матеріал</label>
+                        <input type="text" name="technique" class="form-control luxury-input" value="@Model.Technique" placeholder="Олія, 3D-моделювання..." required />
+                    </div>
+                </div>
+				
+                <div class="mb-4">
+	                <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Пряме посилання на зображення (URL)</label>
+	                <input type="text" name="imageUrl" class="form-control luxury-input" value="@Model.ImageUrl" placeholder="https://..." required />
+	                <small class="text-white-50 mt-1 d-block">Поточна адреса експонату підтягнута з бази. Ви можете змінити її на будь-яке інше URL-посилання.</small>
+                </div>
+
+                <div class="mb-5">
+	                <label class="form-label text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.7);">Опис концепції</label>
+	                <textarea name="description" class="form-control luxury-input" rows="4">@Model.Description</textarea>
+                </div>
+
+
+                <button type="submit" class="btn btn-outline-light w-100 py-3 text-uppercase" style="letter-spacing: 2px; border-radius: 0;">Зберегти зміни</button>
+                <div class="text-center mt-3">
+                    <a asp-action="Index" class="text-white-50 text-decoration-none"><small>Скасувати та повернутися</small></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .luxury-input {
+        background-color: transparent !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        border-radius: 0;
+    }
+
+        .luxury-input:focus {
+            box-shadow: none !important;
+            border-color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+    select option {
+        background-color: #3b0918;
+        color: white;
+    }
+</style>
