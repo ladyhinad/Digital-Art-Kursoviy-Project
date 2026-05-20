@@ -12,7 +12,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Admin/Login";
         options.AccessDeniedPath = "/Admin/Login";
-    });
+    }); 
 
 builder.Services.AddControllersWithViews();
 
